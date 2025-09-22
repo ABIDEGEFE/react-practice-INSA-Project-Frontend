@@ -1,13 +1,15 @@
 import './App.css';
-import { useButton } from './Component/useButton';
-import {Counter} from './Component/Counter';
+import LoginPage from './Component/LoginPage';
+import { AuthProvider } from './Component/AuthContext';
 
 
 function App() {
   return (
     <div className="App">
-      {useButton()}
-      <Counter />
+      <AuthProvider>
+        <LoginPage />
+      </AuthProvider>
+      
     </div>
   );
 }
