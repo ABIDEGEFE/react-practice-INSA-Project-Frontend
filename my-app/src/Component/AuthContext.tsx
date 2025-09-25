@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useReducer, useState } from "reac
 
 interface User {
     name: string;
+    role: string
 }
 
 interface AuthState {
@@ -49,8 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
     const login = (email: string, password: string) => {
-
-        const mockUser: User = { name: 'Teshome' };
+        console.log(email.includes('admin'), email)
+        const mockUser: User = { name: "akalu", role: email.includes('admin')? "admin":"user" };
         dispatch({ type: 'LOGIN SUCCESS', payload: mockUser });
     };
 
