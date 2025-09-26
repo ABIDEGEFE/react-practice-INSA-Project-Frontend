@@ -5,7 +5,7 @@ export const AdminPage = () => {
     const { state } = useAuth();
     return (
         <div>
-           {state.user &&<p>you are {state.user.role}</p>}
+           {state.user &&<p>you are name is {state.user.name} and your role is {state.user.role}</p>}
         </div>
     )
 }

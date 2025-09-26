@@ -6,7 +6,7 @@ export const UserPage = () => {
 
     return (
         <div>
-              {state.user &&<p>you are {state.user.role}</p>}
+              {state.user &&<p>your name is {state.user.name} and your role is {state.user.role}</p>}
         </div>
     )
 }

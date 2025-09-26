@@ -51,7 +51,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = (email: string, password: string) => {
         console.log(email.includes('admin'), email)
-        const mockUser: User = { name: "akalu", role: email.includes('admin')? "admin":"user" };
+        const mockUser: User = { 
+             name: email.includes('admin')?'adminAbebe':email.includes('user')?'userAkalu':"",
+             role: email.includes('admin')? "admin" : email.includes('user')?"user":"" };
         dispatch({ type: 'LOGIN SUCCESS', payload: mockUser });
     };
 

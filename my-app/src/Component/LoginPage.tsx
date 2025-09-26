@@ -1,41 +1,75 @@
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { error } from 'console';
+
+
 
 const LoginPage = () => {
   const { state, login } = useAuth();
   const Navigate = useNavigate()
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  })
 
-  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  
-    login(email, password);
-    // alert('Logged in successfully!');
-    if ( state.user && state.user.role === 'admin'){
+  // useEffect will run only after react renders update.
+  useEffect(() =>{
+    if (state.user?.role === "admin"){
       Navigate('/admin')
     }
-    if ( state.user && state.user.role == 'user') {
+    if (state.user?.role === 'user'){
       Navigate('/user')
     }
+  }, [state.user])
+
+  const HandleLogin = (e:React.FormEvent) => {
+    e.preventDefault();
+
+    login(formData.email, formData.password);
+
+
+    
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]:e.target.value
+    }
+    )
+  }
 
   return (
     <div>
-      {/* {state.user && <p>your name is {state.user.name} and your role is {state.user.role}</p>} */}
-      <form>
-      <input
+       <form onSubmit={HandleLogin}>
+        <div>
+          <label>enter email</label>
+        </div>
+        <input
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-      />
-        <textarea cols={20} rows={2} placeholder="enter your password"></textarea>
-        <button onClick={handleLogin}>submit</button>
-      </form>
+        name = "email"
+        required
+        value={formData.email}
+        onChange={handleInputChange}
+        placeholder='enter your email'
+         />
+         <div>
+            <label>enter password</label>
+         </div>
+         <input
+         type='password'
+         name='password'
+         required
+         value={formData.password}
+         onChange={handleInputChange}
+         placeholder='enter your password'
+          />
 
-      {state.user && <p>your name is {state.user.name} and your role is {state.user.role}</p>}
+        <button>
+          sign in
+        </button>
+       </form>
     </div>
   );
 };
